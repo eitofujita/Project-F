@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проект</title>
+    <script src="https://unpkg.com/vue@3.3.4"></script>
+    <link rel="stylesheet" href="/Project-folder/style.css">
+    <style>
+        /* 背景動画を全画面表示 */
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* 背景として後ろに配置 */
+        }
+
+        /* コンテンツのスタイル */
+        #app {
+            position: relative;
+            z-index: 1; /* 動画の上に表示するために前面へ */
+            color: white; /* 白い文字で背景とコントラストを付ける */
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* テキストの影 */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #FF6F61;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #E65550;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: rgb(103, 34, 34);
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700; /* ゴールドの色 */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        form input,
+        form textarea {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #993d3d;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        form button {
+            max-width: 400px;
+        }
+        html, body {
+    margin: 0;
+    padding: 0;
+    background: transparent; /* 背景色を透明にする */
+}
+
+    </style>
+</head>
+<body>
+<video autoplay loop muted class="background-video">
+<<source src="videos/5-135665794.mp4" type="video/mp4">
+</video>
+
+
+    <!-- Vue.jsアプリケーション -->
+    <div id="app">
+        <h1>{{ message }}</h1>
+        <button @click="toggleComponents">
+            {{ show ? 'Скрыть меню и форму' : 'Показать меню и форму' }}
+        </button>
+        <div v-if="show">
+            <Menu />
+            <ContactForm />
+        </div>
+    </div>
+
+    <script>
+        const Menu = {
+            template: `
+                <nav>
+                    <ul>
+                        <li><a href="#home">Главная</a></li>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#services">Услуги</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                    </ul>
+                </nav>
+            `,
+        };
+
+        const ContactForm = {
+            template: `
+                <form>
+                    <input type="text" placeholder="Ваше имя" />
+                    <input type="email" placeholder="Ваш email" />
+                    <textarea placeholder="Ваше сообщение"></textarea>
+                    <button type="submit">Отправить</button>
+                </form>
+            `,
+        };
+
+        const App = {
+            data() {
+                return {
+                    message: "Добро пожаловать в Vue.js!",
+                    show: false, // メニューとフォームの表示フラグ
+                };
+            },
+            methods: {
+                toggleComponents() {
+                    this.show = !this.show; // フラグをトグル
+                },
+            },
+            components: {
+                Menu,
+                ContactForm,
+            },
+            template: `
+                <div>
+                    <h1>{{ message }}</h1>
+                    <button @click="toggleComponents">
+                        {{ show ? 'Скрыть меню и форму' : 'Показать меню и форму' }}
+                    </button>
+                    <div v-if="show">
+                        <Menu />
+                        <ContactForm />
+                    </div>
+                </div>
+            `,
+        };
+
+        Vue.createApp(App).mount("#app");
+    </script>
+</body>
+</html>
+
